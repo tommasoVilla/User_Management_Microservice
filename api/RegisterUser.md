@@ -19,7 +19,7 @@
 
 * **Data Params**
 
-  `{username: "admin", password:"admin_pass", name:"John", surname:"Doe", fiscalCode:"teacherFiscalCode"}`
+  `{username: "admin", password:"admin_pass", name:"John", surname:"Doe", fiscalCode:"teacherFiscalCode", mail:"name@example.com"}`
 
 * **Success Response:**
 
@@ -29,7 +29,8 @@
                         surname: "Doe",
                         type: "teacher",
                         username:"admin",
-                        password:"hashed_password"}
+                        password:"hashed_password",
+                        mail: "name@example.com"}
                   }`
  
 * **Error Response:**

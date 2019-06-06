@@ -34,7 +34,7 @@ class UserDAO:
         hashed_password = UserDAO.hash_password(user.password)
 
         try:
-            dynamodb = boto3.resource('dynamodb', region_name=os.getenv('AWS_REGION', 'us-east-1'))
+            dynamodb = boto3.resource('dynamodb', region_name=os.getenv('AWS_REGION', 'eu-central-1'))
             table = dynamodb.Table('Users')
 
             table.put_item(
@@ -43,7 +43,8 @@ class UserDAO:
                     'Surname': user.surname,
                     'Username': user.username,
                     'Password': hashed_password,
-                    'Type': user.type
+                    'Type': user.type,
+                    'Mail': user.mail
                 },
                 # to trigger an error in case of duplicate username
                 ConditionExpression="attribute_not_exists(Username)"
@@ -67,7 +68,7 @@ class UserDAO:
         :return: The user found, None otherwise
         """
         try:
-            dynamodb = boto3.resource('dynamodb', region_name=os.getenv('AWS_REGION', 'us-east-1'))
+            dynamodb = boto3.resource('dynamodb', region_name=os.getenv('AWS_REGION', 'eu-central-1'))
             table = dynamodb.Table('Users')
 
             response = table.get_item(Key={'Username': username})

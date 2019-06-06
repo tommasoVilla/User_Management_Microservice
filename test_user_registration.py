@@ -17,7 +17,8 @@ class TestUserRegistration(unittest.TestCase):
                    'surname': 'cognome',
                    'username': 'username',
                    'password': 'password',
-                   'fiscalCode': 'student'}
+                   'fiscalCode': 'student',
+                   'mail': 'mail@mydoom.com'}
         response = self.app.post('/user_management/api/v1.0/users', json=content)
         self.assertEqual(201, response.status_code)
 
@@ -27,7 +28,8 @@ class TestUserRegistration(unittest.TestCase):
                    'surname': 'cognome',
                    'username': 'admin',
                    'password': 'password',
-                   'fiscalCode': 'student'}
+                   'fiscalCode': 'student',
+                   'mail': 'mail@mydoom.com'}
         response = self.app.post('/user_management/api/v1.0/users', json=content)
         self.assertEqual(409, response.status_code)
 
@@ -44,7 +46,19 @@ class TestUserRegistration(unittest.TestCase):
                    'surname': 'cognome',
                    'username': 'username',
                    'password': 'password',
-                   'fiscalCode': 'student'}
+                   'fiscalCode': 'student',
+                   'mail': 'mail@mydoom.com'}
+        response = self.app.post('/user_management/api/v1.0/users', json=content)
+        self.assertEqual(400, response.status_code)
+
+    # Testing forwarding of a request with invalid email
+    def test_bad_request_mail(self):
+        content = {'name': '23',
+                   'surname': 'cognome',
+                   'username': 'username',
+                   'password': 'password',
+                   'fiscalCode': 'student',
+                   'mail': 'invalid_email.com'}
         response = self.app.post('/user_management/api/v1.0/users', json=content)
         self.assertEqual(400, response.status_code)
 
@@ -54,7 +68,8 @@ class TestUserRegistration(unittest.TestCase):
                    'surname': 'cognome',
                    'username': 'username2',
                    'password': 'password',
-                   'fiscalCode': 'notsigned'}
+                   'fiscalCode': 'notsigned',
+                   'mail': 'mail@mydoom.com'}
         response = self.app.post('/user_management/api/v1.0/users', json=content)
         self.assertEqual(403, response.status_code)
 

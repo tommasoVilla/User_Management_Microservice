@@ -8,6 +8,7 @@ class User:
         self.username = ""
         self.password = ""
         self.type = ""
+        self.mail = ""
 
     def from_dict(self, user_dict):
         """
@@ -19,6 +20,7 @@ class User:
         self.username = user_dict['Username']
         self.password = user_dict['Password']
         self.type = user_dict['Type']
+        self.mail = user_dict['Mail']
 
     def to_dict(self):
         """
@@ -29,5 +31,6 @@ class User:
                      'surname': self.surname,
                      'username': self.username,
                      'password': self.password,
-                     'type': self.type}
+                     'type': self.type,
+                     'mail': self.mail}
         return dict_user

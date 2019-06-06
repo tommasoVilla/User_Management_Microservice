@@ -1,4 +1,5 @@
 import os
+from validate_email import validate_email
 
 from flask import Flask, request, abort, make_response, jsonify
 import logging
@@ -63,6 +64,8 @@ def register_user():
         abort(400)
     if 'fiscalCode' not in request.json or not (is_suitable_parameter(request.json['fiscalCode'])):
         abort(400)
+    if 'mail' not in request.json or not (is_valid_mail(request.json['mail'])):
+        abort(400)
 
     # Check if the user is authorized to sign up
     user_type = check_fiscal_code(request.json['fiscalCode'])
@@ -75,6 +78,7 @@ def register_user():
         user.username = request.json['username']
         user.password = request.json['password']
         user.type = user_type
+        user.mail = request.json['mail']
         try:
             inserted = UserDAO.add_user(user)
             if not inserted:
@@ -117,6 +121,10 @@ def internal_server_error(error):
     return make_response(jsonify({'error': 'Internal Server Error'}), 500)
 
 
+def is_valid_mail(mail_string):
+    return validate_email(mail_string)
+
+
 def is_suitable_parameter(parameter):
     #  Checks if the parameter is a not-empty string and has not blank spaces.
     s = parameter.replace(" ", "").replace("\t", "").replace("\n", "")
@@ -129,4 +137,4 @@ def is_suitable_parameter(parameter):
 if __name__ == '__main__':
     host = os.getenv('LISTEN_IP', '0.0.0.0')
     port = int(os.getenv('LISTEN_PORT', '80'))
-    app.run(port=5001, threaded=True)
+    app.run(host=host, port=port, threaded=True)

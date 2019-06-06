@@ -30,7 +30,8 @@
                         surname: "Doe",
                         type: "teacher",
                         username:"admin",
-                        password:"hashed_password""}
+                        password:"hashed_password",
+                        mail:"name@example.com"}
                   }`
  
 * **Error Response:**
