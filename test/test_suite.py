@@ -1,7 +1,7 @@
 import unittest
 
-from test_user_login import TestUserLogin
-from test_user_registration import TestUserRegistration
+from test.test_user_login import TestUserLogin
+from test.test_user_registration import TestUserRegistration
 
 # Launch all tests from test classes
 if __name__ == '__main__':

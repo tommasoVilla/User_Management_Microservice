@@ -69,7 +69,7 @@ class UserDAO:
         """
         try:
             dynamodb = boto3.resource('dynamodb', region_name=os.getenv('AWS_REGION', 'eu-central-1'))
-            table = dynamodb.Table('Users')
+            table = dynamodb.Table(os.getenv('USERS_TABLE_NAME', 'Users'))
 
             response = table.get_item(Key={'Username': username})
             if 'Item' not in response:
